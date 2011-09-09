@@ -1,0 +1,21 @@
+//
+// Prefix header for all source files of the 'indi008' target in the 'indi008' project
+//
+#import <Availability.h> 
+
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif
+
+#ifdef DEBUG
+#define LOG(...) NSLog(__VA_ARGS__)
+#define LOG_CML NSLog(@"<%@:%@:%d>", NSStringFromClass([self class]), NSStringFromSelector(_cmd), __LINE__);
+#else
+#define LOG(...) ;
+#define LOG_CML ;
+#endif
+
+#define degreesToRadian(x) (M_PI * x / 180.0)
+
