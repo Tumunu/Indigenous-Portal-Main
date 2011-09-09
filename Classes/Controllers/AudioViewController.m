@@ -8,37 +8,47 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "AudioViewController.h"
-#import "MainViewController.h"
+#import "NewsViewController.h"
 #import "VideoViewController.h"
 #import "iPortalAppDelegate.h"
 #import "PlayerViewController.h"
-#import "Article.h"
-#import "Feeds.h"
+#import "PortalArticle.h"
+#import "PortalViews.h"
 
 
 @implementation AudioViewController
 
-@synthesize background;
+@synthesize backgroundImage;
 @synthesize audioTable;
 @synthesize audioTableCell;
-@synthesize ipvc;
-@synthesize mvc;
-@synthesize vvc;
+@synthesize playerViewController;
+@synthesize newsViewController;
+@synthesize videoViewController;
 
 - (void)dealloc 
 {
-    [feed release];
-    [mvc release];
-    [vvc release];
-    [ipvc release];
+    [newsViewController release];
+    [videoViewController release];
+    [playerViewController release];
     [super dealloc];
+}
+
+- (id)initWithFeed:(NSMutableArray *)feed
+{
+    [super initWithNibName:@"AudioView" bundle:nil];
+    portalFeeds = feed;
+    
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 }
 
 - (void)viewDidLoad 
 {
     LOG_CML;
-    
-    feed = [[Feeds alloc] init];
 
     [super viewDidLoad];
     [self setupView];
@@ -101,7 +111,7 @@
     [iPortalAppDelegate playEffect:kEffectButton];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    [feed grabFeed:kAudio url:@"http://www.tumunu.com/iportal/audio-feed.php"];
+    [po grabFeed:kAudio url:@"http://www.tumunu.com/iportal/audio-feed.php"];
     [self.audioTable reloadData];
 }
 
@@ -186,6 +196,7 @@
     [self showPlayer];
 }
 
+#prama mark -
 - (void)setupView 
 {
     LOG_CML;
@@ -225,44 +236,6 @@
 	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 	
 	[[theWindow layer] addAnimation:animation forKey:@"swap"];     
-}
-
-- (void)switchView:(int)whatView
-{
-    LOG_CML;
-    
-    VideoViewController *tvvc = [[VideoViewController alloc] initWithNibName:@"VideoView" bundle:nil];
-    self.vvc = tvvc;
-    [tvvc release];
-    
-    MainViewController *tmvc = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil];
-    self.mvc = tmvc;
-    [tmvc release];
-    
-    UIView *currentView = self.view;
-	// get the the underlying UIWindow, or the view containing the current view view
-	UIView *theWindow = [currentView superview];
-    // remove the current view
-    [currentView removeFromSuperview];
-    
-    switch(whatView) 
-    {
-        case kNews:
-            [theWindow addSubview:[mvc view]];
-            break;
-        case kVideo:
-            [theWindow addSubview:[vvc view]];
-            break;
-    }
-    
-	// set up an animation for the transition between the views
-	CATransition *animation = [CATransition animation];
-	[animation setDuration:0.40];
-	[animation setType:kCATransitionPush];
-    [animation setSubtype:kCATransitionFromLeft];
-	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-	
-	[[theWindow layer] addAnimation:animation forKey:@"swap"];    
 }
 
 

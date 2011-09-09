@@ -16,6 +16,23 @@ enum ViewType
 	kNumViewTypes
 };
 
+@class NewsViewController;
+@class VideoViewController;
+@class AudioViewController;
+
 @interface PortalViews : NSObject
+{
+    NewsViewController *newsViewController;    
+    VideoViewController *videoViewController;    
+    AudioViewController *audioViewController;
+}
+
+@property (nonatomic, retain)NewsViewController *newsViewController;
+@property (nonatomic, retain)VideoViewController *videoViewController;
+@property (nonatomic, retain)AudioViewController *audioViewController;
+
+
+- (void)switchView:(int)whatView;
+- (void)switchView:(int)whatView withFeed:(NSMutableArray *)feed;
 
 @end

@@ -9,8 +9,6 @@
 #import "SoundEngine.h"
 #import "iPortalAppDelegate.h"
 #import "RootNavViewController.h"
-#import "CustomAlertViewController.h"
-#import "PortalFeeds.h"
 
 
 #define kListenerDistance 1.0  // Used for creating a realistic sound field
@@ -28,7 +26,6 @@ static UInt32 sounds[kNumEffects];		// References to the loaded sound effects
 @synthesize blankBaseView;
 @synthesize blankBaseViewController;
 @synthesize rootNavViewController;
-@synthesize customAlertViewController;
 @synthesize applicationActive;
 
 #pragma mark -
@@ -59,10 +56,6 @@ static UInt32 sounds[kNumEffects];		// References to the loaded sound effects
 - (void)dealloc 
 {    
     // Old Symbian C++ habit
-    if(customAlertViewController) 
-    {
-        [customAlertViewController release];
-    }
     if(blankBaseView) 
     {
         [blankBaseView release];
@@ -96,37 +89,15 @@ static UInt32 sounds[kNumEffects];		// References to the loaded sound effects
     blankBaseView.backgroundColor = [UIColor clearColor];
     [window addSubview:blankBaseView];
     
-    RootNavViewController *tempRootNavViewController = [[RootNavViewController alloc] initWithNibName:@"RootNavView" bundle:nil];
+    // The "seed" to impregnate
+    feeds = [[PortalFeeds alloc] init];
+    
+    RootNavViewController *tempRootNavViewController = [[RootNavViewController alloc] initWithFeed:feeds];
     self.rootNavViewController = tempRootNavViewController;
     [tempRootNavViewController release];
     
     self.rootNavViewController.view.frame = [UIScreen mainScreen].applicationFrame;
     [self.blankBaseViewController presentModalViewController:self.rootNavViewController animated:YES];
-    
-    // Better check whether there is anything to view
-    // Should also be placed in the Root Nav View Controller but pfft...
-    PortalFeeds *feeds = [[PortalFeeds alloc] init];
-    if(![feeds checkIsDataSourceAvailable]) 
-    {
-        CustomAlertViewController * tempCustomeAlertViewController = [[CustomAlertViewController alloc] initWithNibName:@"CustomAlertView" bundle:nil];
-        self.customAlertViewController = tempCustomeAlertViewController;
-        [tempCustomeAlertViewController release];
-        
-        // Use “bounds” instead of “applicationFrame” — the latter will introduce 
-        // a 20 pixel empty status bar (unless you want that..)
-        self.customAlertViewController.view.frame = [UIScreen mainScreen].applicationFrame;
-        self.customAlertViewController.view.alpha = 0.0;
-        [window addSubview:[customAlertViewController view]];
-        
-        // Don't yell at me about not using NULL.  They're the same, it's just convention 
-        // to use one for pointers and the other one for everything else.
-        [UIView beginAnimations:nil context:nil];    
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        [UIView setAnimationDuration:0.33];  //.25 looks nice as well.
-        self.customAlertViewController.view.alpha = 1.0;
-        [UIView commitAnimations];
-    }
-    [feeds release];
     
     [window makeKeyAndVisible];
     applicationActive = TRUE;

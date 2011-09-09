@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TouchXML.h"
+#import "PortalFeeds.h"
 
 // Yes this could just be a plain enum
 typedef enum 
@@ -18,7 +19,6 @@ typedef enum
 } Effect;
 
 @class RootNavViewController;
-@class CustomAlertViewController;
 
 @interface iPortalAppDelegate : NSObject <UIApplicationDelegate> 
 {
@@ -27,7 +27,7 @@ typedef enum
     UIViewController *blankBaseViewController;
     
     RootNavViewController *rootNavViewController;
-    CustomAlertViewController *customAlertViewController;
+    PortalFeeds *feeds;
         
     BOOL applicationActive;
     BOOL isDataSourceAvailable;
@@ -37,7 +37,7 @@ typedef enum
 @property (nonatomic, retain) UIView *blankBaseView;
 @property (nonatomic, retain) UIViewController *blankBaseViewController;
 @property (nonatomic, retain) RootNavViewController *rootNavViewController;
-@property (nonatomic, retain) CustomAlertViewController *customAlertViewController;
+@property (nonatomic, retain) PortalFeeds *feeds;
 @property (readonly) BOOL applicationActive;
 
 -(void)setupApp;

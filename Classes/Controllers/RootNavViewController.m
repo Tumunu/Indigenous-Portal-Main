@@ -12,6 +12,9 @@
 #import "NewsViewController.h"
 #import "AudioViewController.h"
 #import "VideoViewController.h"
+#import "CustomAlertViewController.h"
+#import "PortalFeeds.h"
+#import "PortalViews.h"
 
 
 @implementation RootNavViewController
@@ -20,8 +23,41 @@
 @synthesize newsViewController;
 @synthesize audioViewController;
 @synthesize videoViewController;
-@synthesize what;
+@synthesize customAlertViewController;
+@synthesize portalFeeds;
+@synthesize portalViews;
 
+
+- (void)dealloc 
+{
+    LOG_CML;
+    
+    if(customAlertViewController) 
+    {
+        [customAlertViewController release];
+    }
+    
+    [newsViewController release];
+    [audioViewController release];
+    [videoViewController release];
+    [portalFeeds release];
+    [portalViews release];
+    
+    [super dealloc];
+}
+
+- (id)initWithFeed:(PortalFeeds *)feed
+{
+    [super initWithNibName:@"RootNavView" bundle:nil];
+    portalFeeds = feed;
+    
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+}
 
 - (void)viewDidLoad 
 {
@@ -29,6 +65,30 @@
     
     [super viewDidLoad];
     [self setBackgroundImage]; 
+    
+    portalViews = [[PortalViews alloc] init];
+    
+    // Should also be placed elsewhere but pfft...
+    if(![feeds checkIsDataSourceAvailable]) 
+    {
+        CustomAlertViewController * tempCustomeAlertViewController = [[CustomAlertViewController alloc] initWithNibName:@"CustomAlertView" bundle:nil];
+        self.customAlertViewController = tempCustomeAlertViewController;
+        [tempCustomeAlertViewController release];
+        
+        // Use “bounds” instead of “applicationFrame” — the latter will introduce 
+        // a 20 pixel empty status bar (unless you want that..)
+        self.customAlertViewController.view.frame = [UIScreen mainScreen].applicationFrame;
+        self.customAlertViewController.view.alpha = 0.0;
+        [window addSubview:[customAlertViewController view]];
+        
+        // Don't yell at me about not using NULL.  They're the same, it's just convention 
+        // to use one for pointers and the other one for everything else.
+        [UIView beginAnimations:nil context:nil];    
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+        [UIView setAnimationDuration:0.33];  //.25 looks nice as well.
+        self.customAlertViewController.view.alpha = 1.0;
+        [UIView commitAnimations];
+    }
 }
 
 - (void)didReceiveMemoryWarning 
@@ -39,25 +99,14 @@
 - (void)viewDidUnload 
 {}
 
-
-- (void)dealloc 
-{
-    LOG_CML;
-    
-    [newsViewController release];
-    [audioViewController release];
-    [videoViewController release];
-    [super dealloc];
-}
-
+#pragma mark -
 - (IBAction)showNewsList 
 {
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
-    self.what = 1;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [self switchView];
+    [portalViews switchView:kNews withFeed:portalFeeds.localNewsFeed];
 }
 
 - (IBAction)showVideoList 
@@ -65,9 +114,8 @@
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
-    self.what = 2;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [self switchView];
+    [portalViews switchView:kVideo withFeed:portalFeeds.localVideoFeed];
 }
 
 - (IBAction)showAudioList 
@@ -75,11 +123,11 @@
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
-    self.what =3;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [self switchView];
+    [portalViews switchView:kAudio withFeed:portalFeeds.localAudioFeed];
 }
 
+#pragma mark -
 - (void)setBackgroundImage 
 {
 	LOG_CML;
@@ -92,52 +140,5 @@
 	[self.view sendSubviewToBack:backgroundImage];
 }
 
-- (void)switchView 
-{
-    LOG_CML;
-    
-    MainViewController *tmvc = [[MainViewController alloc] initWithNibName:@"NewsView" bundle:nil];
-    self.mvc = tmvc;
-    [tmvc release];
-    
-    VideoViewController *tvvc = [[VideoViewController alloc] initWithNibName:@"VideoView" bundle:nil];
-    self.vvc = tvvc;
-    [tvvc release];
-    
-    AudioViewController *tavc = [[AudioViewController alloc] initWithNibName:@"AudioView" bundle:nil];
-    self.avc = tavc;
-    [tavc release];
-    
-    UIView *currentView = self.view;
-	// get the the underlying UIWindow, or the view containing the current view view
-	UIView *theWindow = [currentView superview];
-    // remove the current view
-    [currentView removeFromSuperview];
-    
-    switch(self.what) 
-    {
-        case 1:
-            // replace with mvc
-            [theWindow addSubview:[mvc view]];
-            break;
-        case 2:
-            // replace vvc
-            [theWindow addSubview:[vvc view]];
-            break;
-        case 3:
-            // replace with avc
-            [theWindow addSubview:[avc view]];
-            break;
-    }
-    
-	// set up an animation for the transition between the views
-	CATransition *animation = [CATransition animation];
-	[animation setDuration:0.85];
-	[animation setType:kCATransitionPush];
-	[animation setSubtype:kCATransitionFromTop];
-	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-	
-	[[theWindow layer] addAnimation:animation forKey:@"swap"];    
-}
 
 @end

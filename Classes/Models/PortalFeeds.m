@@ -20,16 +20,14 @@
     LOG_CML;
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    localNewsFeed = [NSMutableArray arrayWithArray:[prefs objectForKey:@"newsfeed"]];
-    localVideoFeed = [NSMutableArray arrayWithArray:[prefs objectForKey:@"videofeed"]];
-    localAudioFeed = [NSMutableArray arrayWithArray:[prefs objectForKey:@"audiofeed"]];
     
     switch (whatFeed) 
     {
         case kNews:
+            localNewsFeed = [NSMutableArray arrayWithArray:[prefs objectForKey:@"newsfeed"]];
             if([self.localNewsFeed count] == 0) 
             {
-                NSString * newsAddress = @"http://www.tumunu.com/iportal/main-feed.php";
+                NSString *newsAddress = @"http://www.tumunu.com/iportal/main-feed.php";
                 [self grabFeed:newsAddress];
             } 
             else 
@@ -38,9 +36,10 @@
             }
             break;
         case kVideo:
+            localVideoFeed = [NSMutableArray arrayWithArray:[prefs objectForKey:@"videofeed"]];
             if([self.localVideoFeed count] == 0) 
             {
-                NSString * videoAddress = @"http://www.tumunu.com/iportal/video-feed.php";
+                NSString *videoAddress = @"http://www.tumunu.com/iportal/video-feed.php";
                 [self grabFeed:videoAddress];
             } 
             else 
@@ -49,9 +48,10 @@
             }
             break;
         case kAudio:
+            localAudioFeed = [NSMutableArray arrayWithArray:[prefs objectForKey:@"audiofeed"]];
             if([self.localAudioFeed count] == 0) 
             {
-                NSString * audioAddress = @"http://www.tumunu.com/iportal/audio-feed.php";
+                NSString *audioAddress = @"http://www.tumunu.com/iportal/audio-feed.php";
                 [self grabFeed:audioAddress];
             } 
             else 
@@ -64,7 +64,7 @@
     }
 }
 
-- (void) grabFeed:(int)whatFeed url:(NSString *)portalAddress 
+- (void)grabFeed:(int)whatFeed url:(NSString *)portalAddress 
 {
     LOG_CML;
     

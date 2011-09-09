@@ -8,31 +8,29 @@
 
 #import <UIKit/UIKit.h>
 #import "AboutViewController.h"
-#import "Feeds.h"
+#import "PortalViews.h"
 
 @class PlayerViewController;
-@class MainViewController;
+@class NewsViewController;
 @class VideoViewController;
 
 @interface AudioViewController : UIViewController <AboutViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> 
 {
-    UIImageView * background;
-    UITableView * audioTable;
-    UITableViewCell * audioTableCell;
+    UIImageView *backgroundImage;
+    UITableView *audioTable;
+    UITableViewCell *audioTableCell;
     
-    PlayerViewController * ipvc;
-    MainViewController * mvc;
-    VideoViewController * vvc;
-    
-    Feeds *feed;
+    PlayerViewController *playerViewController;
+    NewsViewController *newsViewController;
+    VideoViewController *videoViewController;
 }
 
-@property (nonatomic, retain) UIImageView * background;
-@property (nonatomic, retain) IBOutlet UITableView * audioTable;
-@property (nonatomic, retain) IBOutlet UITableViewCell * audioTableCell;
-@property (nonatomic, retain) PlayerViewController * ipvc;
-@property (nonatomic, retain) MainViewController * mvc;
-@property (nonatomic, retain) VideoViewController * vvc;
+@property (nonatomic, retain) UIImageView *backgroundImage;
+@property (nonatomic, retain) IBOutlet UITableView *audioTable;
+@property (nonatomic, retain) IBOutlet UITableViewCell *audioTableCell;
+@property (nonatomic, retain) PlayerViewController *playerViewController;
+@property (nonatomic, retain) NewsViewController *newsViewController;
+@property (nonatomic, retain) VideoViewController *videoViewController;
 
 - (IBAction)showAbout;
 - (IBAction)showNewsList;
@@ -42,6 +40,6 @@
 - (void)setupView;
 - (void)setBackgroundImage;
 - (void)showPlayer;
-- (void)switchView:(int)whatView;
+
 
 @end

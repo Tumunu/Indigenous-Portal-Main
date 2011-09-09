@@ -20,7 +20,7 @@
 @property (nonatomic, retain) NSMutableArray *localAudioFeed;
 
 - (void)checkFeed:(int)whatFeed;
-- (void) grabFeed:(int)whatFeed url:(NSString *)portalAddress;
+- (void)grabFeed:(int)whatFeed url:(NSString *)portalAddress;
 - (BOOL)checkIsDataSourceAvailable;
 - (NSString *)springClean:(NSString *)sourceString;
 
