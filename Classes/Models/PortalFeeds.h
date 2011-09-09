@@ -1,5 +1,5 @@
 //
-//  Feeds.h
+//  PortalFeeds.h
 //  iPortal
 //
 //  Created by Cleave Pokotea on 9/09/11.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Feeds : NSObject
+@interface PortalFeeds : NSObject
 {
     NSMutableArray *localNewsFeed;
     NSMutableArray *localVideoFeed;
@@ -19,7 +19,10 @@
 @property (nonatomic, retain) NSMutableArray *localVideoFeed;
 @property (nonatomic, retain) NSMutableArray *localAudioFeed;
 
--(void)checkFeed:(int)whatFeed;
--(void) grabFeed:(int)whatFeed url:(NSString *)portalAddress;
+- (void)checkFeed:(int)whatFeed;
+- (void) grabFeed:(int)whatFeed url:(NSString *)portalAddress;
+- (BOOL)checkIsDataSourceAvailable;
+- (NSString *)springClean:(NSString *)sourceString;
+
 
 @end

@@ -1,19 +1,21 @@
 //
-//  Feeds.m
+//  PortalFeeds.m
 //  iPortal
 //
 //  Created by Cleave Pokotea on 9/09/11.
 //  Copyright (c) 2011 Tumunu. All rights reserved.
 //
 
-#import "Feeds.h"
-#import "Article.h"
+#import <SystemConfiguration/SystemConfiguration.h>
+#import "PortalFeeds.h"
+#import "PortalViews.h"
 
-@implementation Feeds
+
+@implementation PortalFeeds
 
 @synthesize localNewsFeed, localAudioFeed, localVideoFeed;
 
--(void)checkFeed:(int)whatFeed 
+- (void)checkFeed:(int)whatFeed 
 {
     LOG_CML;
     
@@ -62,7 +64,7 @@
     }
 }
 
--(void) grabFeed:(int)whatFeed url:(NSString *)portalAddress 
+- (void) grabFeed:(int)whatFeed url:(NSString *)portalAddress 
 {
     LOG_CML;
     
@@ -133,6 +135,69 @@
     [prefs synchronize];
     [self hideActivityIndicator];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+
+- (BOOL)checkIsDataSourceAvailable 
+{
+    LOG_CML;
+    
+    static BOOL checkNetwork = YES;
+    if (checkNetwork) 
+    {
+        
+        checkNetwork = NO;
+        
+        Boolean success;    
+        const char *host_name = "tumunu.com";
+        
+        SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host_name);
+        SCNetworkReachabilityFlags flags;
+        success = SCNetworkReachabilityGetFlags(reachability, &flags);
+        isDataSourceAvailable = success && (flags & kSCNetworkFlagsReachable) && !(flags & kSCNetworkFlagsConnectionRequired);
+        CFRelease(reachability);
+    }
+    
+    return isDataSourceAvailable;
+}
+
+- (NSString *)springClean:(NSString *)sourceString 
+{
+    char charCode[28];
+    int i;
+    for(i=0x00;i<=0x08;i++) 
+    {
+        charCode[i]=i;
+    }
+    
+    charCode[9]=0x0B;
+    for(i=0x0E;i<=0x1F;i++) 
+    {
+        charCode[i]=i;
+    }
+    
+    NSScanner *sourceScanner = [NSScanner scannerWithString:sourceString];
+    NSMutableString *cleanedString = [[[NSMutableString alloc] init] autorelease];
+    
+    // create an array of chars for all control characters between 0×00 and 0×1F, apart from \t, \n, \f and \r (which are at code points 0×09, 0×0A, 0×0C and 0×0D respectively)
+    
+    // convert this array into an NSCharacterSet
+    NSString *controlCharString = [NSString stringWithCString:charCode length:28];
+    NSCharacterSet *controlCharSet = [NSCharacterSet characterSetWithCharactersInString:controlCharString];
+    
+    // request that the scanner ignores these characters
+    [sourceScanner setCharactersToBeSkipped:controlCharSet];
+    
+    // run through the string to remove control characters
+    while ([sourceScanner isAtEnd] == NO) 
+    {
+        NSString *outString;
+        if ([sourceScanner scanUpToCharactersFromSet:controlCharSet intoString:&outString])
+        {
+            [cleanedString appendString:outString];
+        }
+    }
+    
+    return cleanedString;
 }
 
 

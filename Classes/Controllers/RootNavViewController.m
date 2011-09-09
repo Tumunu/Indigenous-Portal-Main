@@ -1,59 +1,57 @@
 //
-//  NavViewController.m
+//  RootNavViewController.m
 //  iPortal
 //
 //  Created by Cleave Pokotea on 14/05/09.
 //  Copyright 2009 Make Things Talk. All rights reserved.
 //
 
-#import "NavViewController.h"
-#import "MainViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "iPortalAppDelegate.h"
+#import "RootNavViewController.h"
+#import "NewsViewController.h"
 #import "AudioViewController.h"
 #import "VideoViewController.h"
-#import "iPortalAppDelegate.h"
-#import <QuartzCore/QuartzCore.h>
 
 
-@implementation NavViewController
+@implementation RootNavViewController
 
-@synthesize background;
-@synthesize mvc;
-@synthesize avc;
-@synthesize vvc;
+@synthesize backgroundImage;
+@synthesize newsViewController;
+@synthesize audioViewController;
+@synthesize videoViewController;
 @synthesize what;
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    LOG(@"-= NAV CONTROLLER =-");
+
+- (void)viewDidLoad 
+{
     LOG_CML;
     
     [super viewDidLoad];
     [self setBackgroundImage]; 
 }
 
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning 
+{
     [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
+- (void)viewDidUnload 
+{}
 
 
-- (void)dealloc {
+- (void)dealloc 
+{
     LOG_CML;
     
-    [mvc release];
-    [avc release];
-    [vvc release];
+    [newsViewController release];
+    [audioViewController release];
+    [videoViewController release];
     [super dealloc];
 }
 
-- (IBAction)showNewsList {
+- (IBAction)showNewsList 
+{
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
@@ -62,7 +60,8 @@
     [self switchView];
 }
 
-- (IBAction)showVideoList {
+- (IBAction)showVideoList 
+{
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
@@ -71,7 +70,8 @@
     [self switchView];
 }
 
-- (IBAction)showAudioList {
+- (IBAction)showAudioList 
+{
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
@@ -80,22 +80,23 @@
     [self switchView];
 }
 
-- (void)setBackgroundImage {
+- (void)setBackgroundImage 
+{
 	LOG_CML;
     
-	UIImageView *customBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-nav-163dpi.png"]];
-	self.background = customBackground;
-	[customBackground release];
+	UIImageView *tempUIImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-nav-163dpi.png"]];
+	self.backgroundImage = tempUIImage;
+	[tempUIImage release];
 	
-	[self.view addSubview:background];
-	LOG(@"Added background subview %@ to %@", background, self.view);
-	[self.view sendSubviewToBack:background];
+	[self.view addSubview:backgroundImage];
+	[self.view sendSubviewToBack:backgroundImage];
 }
 
-- (void)switchView {
+- (void)switchView 
+{
     LOG_CML;
     
-    MainViewController *tmvc = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil];
+    MainViewController *tmvc = [[MainViewController alloc] initWithNibName:@"NewsView" bundle:nil];
     self.mvc = tmvc;
     [tmvc release];
     
@@ -113,7 +114,8 @@
     // remove the current view
     [currentView removeFromSuperview];
     
-    switch(self.what) {
+    switch(self.what) 
+    {
         case 1:
             // replace with mvc
             [theWindow addSubview:[mvc view]];

@@ -25,22 +25,28 @@
 
 - (void)dealloc 
 {
-    if(webView) {
+    if(webView) 
+    {
         [webView release];
     }
-    if(btn) {
+    if(btn) 
+    {
         [btn release];
     }
-    if(shareBtn) {
+    if(shareBtn) 
+    {
         [shareBtn release];
     }   
-    if(mvc) {
+    if(mvc) 
+    {
         [mvc release];
     }
-    if(vvc) {
+    if(vvc) 
+    {
         [vvc release];
     }  
-    if(cavc) {
+    if(cavc) 
+    {
         [cavc release];
     }
     
@@ -73,9 +79,7 @@
     UIView *currentView = self.view;
 	// get the the underlying UIWindow, or the view containing the current view view
 	UIView *theWindow = [currentView superview];
-	
-	// remove the current view and replace with myView1
-	[currentView removeFromSuperview];
+    [currentView removeFromSuperview];
     
     switch ([iPortalAppDelegate get].what) 
     {
@@ -104,7 +108,7 @@
     LOG_CML;
 	
 	NSString *subjString = @"Indigenous Portal | Something you might be interested in";
-    //NSString *msgString = [NSString stringWithFormat: @"Here's an item I thought you might be interested in\r\n\r\n %@", [iPortalAppDelegate get].cellURL];
+    NSString *msgString = [NSString stringWithFormat: @"Here's an item I thought you might be interested in\r\n\r\n %@", [iPortalAppDelegate get].cellURL];
 
 	NSString *urlString = [NSString stringWithFormat: @"mailto:?subject=%@&body=%@", 
 						   [subjString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
@@ -118,18 +122,16 @@
 	[[UIApplication sharedApplication] openURL: mailURL];
 }
 
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning 
+{
     [super didReceiveMemoryWarning];
-	// Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
+- (void)viewDidUnload 
+{}
 
-- (void)setupView {
+- (void)setupView 
+{
     LOG_CML;
     
 #if __IPHONE_3_0

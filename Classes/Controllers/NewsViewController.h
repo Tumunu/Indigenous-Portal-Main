@@ -1,5 +1,5 @@
 //
-//  MainViewController.h
+//  NewsViewController.h
 //  indi006
 //
 //  Created by Cleave Pokotea on 9/05/09.
@@ -13,7 +13,7 @@
 @class AudioViewController;
 @class VideoViewController;
 
-@interface MainViewController : UIViewController <AboutViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface NewsViewController : UIViewController <AboutViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> {
     
     UIImageView * background;
     NSString * cellString;

@@ -6,15 +6,15 @@
 //  Copyright Tumunu 2009 - 2011. All rights reserved.
 //
 
-#import "MainViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "NewsViewController.h"
 #import "HtmlViewController.h"
 #import "AudioViewController.h"
 #import "VideoViewController.h"
 #import "iPortalAppDelegate.h"
-#import <QuartzCore/QuartzCore.h>
 
 
-@implementation MainViewController
+@implementation NewsViewController
 
 @synthesize background;
 @synthesize myTable;
@@ -25,38 +25,34 @@
 @synthesize vvc;
 @synthesize what;
 
-- (void)dealloc {
-    
+- (void)dealloc 
+{
     [avc release];
     [vvc release];
     [hvc release];
     [super dealloc];
 }
 
-- (void)viewDidLoad {
-    LOG(@"-= NEWS CONTROLLER =-");
+- (void)viewDidLoad 
+{
     LOG_CML;
     
-    [[iPortalAppDelegate get] hideActivityIndicator];
     [self setupView];
     [super viewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning 
+{
     [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
+- (void)viewDidUnload 
+{}
 
 #pragma mark -
 #pragma mark Delegate 
-- (void)aboutViewControllerDidFinish:(AboutViewController *)controller {
+- (void)aboutViewControllerDidFinish:(AboutViewController *)controller 
+{
     LOG_CML;
     
 	[self dismissModalViewControllerAnimated:YES];
@@ -64,20 +60,21 @@
 
 #pragma mark -
 #pragma mark Actions
-- (IBAction)showAbout {  
+- (IBAction)showAbout 
+{  
     LOG_CML;
 	
     [iPortalAppDelegate playEffect:kEffectButton];
     [iPortalAppDelegate playEffect:kEffectPage];
+    
 	AboutViewController *controller = [[AboutViewController alloc] initWithNibName:@"AboutView" bundle:nil];
 	controller.delegate = self;
-	
 	[self presentModalViewController:controller animated:YES];
-	
 	[controller release];
 }
 
-- (IBAction)showVideoList {
+- (IBAction)showVideoList 
+{
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
@@ -86,7 +83,8 @@
     [self switchView];
 }
 
-- (IBAction)showAudioList {
+- (IBAction)showAudioList 
+{
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
@@ -95,7 +93,8 @@
     [self switchView];
 }
 
-- (IBAction)refreshList{
+- (IBAction)refreshList
+{
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
@@ -106,7 +105,8 @@
     [self.myTable reloadData];
 }
 
-- (void)setBackgroundImage {
+- (void)setBackgroundImage 
+{
 	LOG_CML;
     
 	UIImageView *customBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Bkgnd.png"]];
@@ -120,13 +120,15 @@
 
 #pragma mark Table view methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
+{
     return 1;
 }
 
 
 // Customize the number of rows in the table view.
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section 
+{
     
 	NSInteger i = [[iPortalAppDelegate get].localNewsFeed count];
 	LOG(@"Number of rows: %d",i);
@@ -135,7 +137,8 @@
 }
 
 // Manages the height of the cell.
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath  {  
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath  
+{  
     
     NSDictionary * s = [[iPortalAppDelegate get].localNewsFeed objectAtIndex:indexPath.row];
     cellString = [[s objectForKey:@"description"] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -143,7 +146,8 @@
     // Default label size
     CGSize labelSize = CGSizeMake(273.0, 10.0);
     
-    if ([cellString length] > 0) {
+    if ([cellString length] > 0) 
+    {
         //LOG(@"String length is greater than zero");
         
         // Scaled label size
@@ -155,19 +159,21 @@
 } 
 
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
+{
     
 	LOG(@"cellForRowAtIndexPath %@", indexPath);
     
 	UITableViewCell *customCell = (UITableViewCell*) [tableView dequeueReusableCellWithIdentifier:@"RssTableCell"];
     
-	if (customCell == nil) {
-        
+	if (customCell == nil) 
+    {
 		[[NSBundle mainBundle] loadNibNamed:@"RssTableCell" owner:self options:NULL];
 		customCell = oddCell;
 		LOG(@"customizing %@", customCell);
-	} else {
-        
+	} 
+    else 
+    {
 		LOG(@"reusing %@", customCell.reuseIdentifier);
 	}
     
@@ -191,8 +197,8 @@
 }
 
 // Override to support row selection in the table view.
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+{
     [iPortalAppDelegate playEffect:kEffectPage];
     // Navigation logic may go here -- for example, create and push another view controller.
 	// AnotherViewController *anotherViewController = [[AnotherViewController alloc] initWithNibName:@"AnotherView" bundle:nil];
@@ -207,7 +213,8 @@
     [self viewOnlineContent];
 }
 
-- (void)setupView {
+- (void)setupView 
+{
     LOG_CML;
     
 #if __IPHONE_3_0
@@ -221,7 +228,8 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
-- (void)viewOnlineContent {
+- (void)viewOnlineContent 
+{
     LOG_CML;
     
     HtmlViewController *thvc = [[HtmlViewController alloc] initWithNibName:@"HtmlView" bundle:nil];
@@ -247,7 +255,8 @@
 }
 
 
-- (void)switchView {
+- (void)switchView 
+{
     LOG_CML;
     
     VideoViewController *tvvc = [[VideoViewController alloc] initWithNibName:@"VideoView" bundle:nil];
@@ -264,7 +273,8 @@
     // remove the current view
     [currentView removeFromSuperview];
     
-    switch(self.what) {
+    switch(self.what)
+    {
         case 1:
             // replace vvc
             [theWindow addSubview:[vvc view]];

@@ -1,16 +1,16 @@
 //
-//  Article.m
+//  ProtalArticle.m
 //  iPortal
 //
 //  Created by Cleave Pokotea on 9/09/11.
 //  Copyright (c) 2011 Tumunu. All rights reserved.
 //
 
-#import "Article.h"
+#import "ProtalArticle.h"
 
 
 
-@implementation Article
+@implementation PortalArticle
 
 @synthesize cellURL;
 @synthesize whatView;

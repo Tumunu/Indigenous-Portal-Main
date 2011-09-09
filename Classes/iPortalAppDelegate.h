@@ -17,47 +17,32 @@ typedef enum
 	kNumEffects
 } Effect;
 
-
-@class MainViewController;
-@class HtmlViewController;
-@class NavViewController;
+@class RootNavViewController;
 @class CustomAlertViewController;
 
 @interface iPortalAppDelegate : NSObject <UIApplicationDelegate> 
 {
     UIWindow *window;
-    UIView * blankView;
-    UIViewController * bvc;
+    UIView *blankBaseView;
+    UIViewController *blankBaseViewController;
     
-    MainViewController * mainViewController;
-    HtmlViewController * htmlViewController;
-    NavViewController * navViewController;
-    CustomAlertViewController * cavc;
+    RootNavViewController *rootNavViewController;
+    CustomAlertViewController *customAlertViewController;
         
     BOOL applicationActive;
     BOOL isDataSourceAvailable;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) UIView * blankView;
-@property (nonatomic, retain) UIViewController * bvc;
-
-@property (nonatomic, retain) MainViewController * mainViewController;
-@property (nonatomic, retain) HtmlViewController * htmlViewController;
-@property (nonatomic, retain) NavViewController * navViewController;
-@property (nonatomic, retain) CustomAlertViewController * cavc;
-
+@property (nonatomic, retain) UIView *blankBaseView;
+@property (nonatomic, retain) UIViewController *blankBaseViewController;
+@property (nonatomic, retain) RootNavViewController *rootNavViewController;
+@property (nonatomic, retain) CustomAlertViewController *customAlertViewController;
 @property (readonly) BOOL applicationActive;
 
-- (void)setupApp;
-- (void)setupViews;
-- (void)setupSound;
-
-- (BOOL)checkIsDataSourceAvailable;
-
-- (void)showActivityIndicator;
-- (void)hideActivityIndicator;
-
+-(void)setupApp;
+-(void)setupViews;
+-(void)setupSound;
 
 /* 
  * Sound effect methods
