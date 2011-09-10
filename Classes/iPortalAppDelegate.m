@@ -8,7 +8,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "SoundEngine.h"
 #import "iPortalAppDelegate.h"
-#import "RootNavViewController.h"
 
 
 #define kListenerDistance 1.0  // Used for creating a realistic sound field
@@ -23,9 +22,7 @@ static UInt32 sounds[kNumEffects];		// References to the loaded sound effects
 
 
 @synthesize window;
-@synthesize blankBaseView;
-@synthesize blankBaseViewController;
-@synthesize rootNavViewController;
+@synthesize rootViewController;
 @synthesize applicationActive;
 
 #pragma mark -
@@ -56,9 +53,9 @@ static UInt32 sounds[kNumEffects];		// References to the loaded sound effects
 - (void)dealloc 
 {    
     // Old Symbian C++ habit
-    if(blankBaseView) 
+    if(rootViewController) 
     {
-        [blankBaseView release];
+        [rootViewController release];
     }
     
 	[window release];
@@ -80,27 +77,12 @@ static UInt32 sounds[kNumEffects];		// References to the loaded sound effects
 {
     LOG_CML;
     
-    UIViewController *tempUIViewController = [[UIViewController alloc] init];
-    self.blankBaseViewController = tempUIViewController;
-    [tempUIViewController release];
+    RootViewController *tempRootViewController = [[RootViewController alloc] init];
+    self.rootViewController = tempRootViewController;
+    [tempRootViewController release];
     
-    blankBaseView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
-    blankBaseViewController.view = blankBaseView;
-    blankBaseView.backgroundColor = [UIColor clearColor];
-    [window addSubview:blankBaseView];
-    
-    // The "seed" to impregnate
-    feeds = [[PortalFeeds alloc] init];
-    
-    RootNavViewController *tempRootNavViewController = [[RootNavViewController alloc] initWithFeed:feeds];
-    self.rootNavViewController = tempRootNavViewController;
-    [tempRootNavViewController release];
-    
-    self.rootNavViewController.view.frame = [UIScreen mainScreen].applicationFrame;
-    [self.blankBaseViewController presentModalViewController:self.rootNavViewController animated:YES];
-    
-    [window makeKeyAndVisible];
-    applicationActive = TRUE;
+    [self.window addSubview:[self.rootViewController view]];
+    [self.window makeKeyAndVisible];
 }
 
 - (void)setupSound 

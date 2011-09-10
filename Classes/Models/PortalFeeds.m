@@ -15,64 +15,62 @@
 
 @synthesize localNewsFeed, localAudioFeed, localVideoFeed;
 
-- (void)checkFeed:(int)whatFeed 
+- (BOOL)checkIfFeedArrayExists:(int)whatFeed
 {
     LOG_CML;
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    
+    BOOL feedExists = YES;
     switch (whatFeed) 
     {
         case kNews:
             localNewsFeed = [NSMutableArray arrayWithArray:[prefs objectForKey:@"newsfeed"]];
             if([self.localNewsFeed count] == 0) 
             {
-                NSString *newsAddress = @"http://www.tumunu.com/iportal/main-feed.php";
-                [self grabFeed:newsAddress];
-            } 
-            else 
-            {
-                LOG(@"News Feed: %2f", [localNewsFeed count]);
+                feedExists = NO;
             }
             break;
         case kVideo:
             localVideoFeed = [NSMutableArray arrayWithArray:[prefs objectForKey:@"videofeed"]];
             if([self.localVideoFeed count] == 0) 
             {
-                NSString *videoAddress = @"http://www.tumunu.com/iportal/video-feed.php";
-                [self grabFeed:videoAddress];
-            } 
-            else 
-            {
-                LOG(@"Video Feed: %2f", [localVideoFeed count]);
+                feedExists = NO;
             }
             break;
         case kAudio:
             localAudioFeed = [NSMutableArray arrayWithArray:[prefs objectForKey:@"audiofeed"]];
             if([self.localAudioFeed count] == 0) 
             {
-                NSString *audioAddress = @"http://www.tumunu.com/iportal/audio-feed.php";
-                [self grabFeed:audioAddress];
-            } 
-            else 
-            {
-                LOG(@"Audio Feed: %2f", [localAudioFeed count]);
+                feedExists = NO;
             }
             break;
         default:
             break;
     }
+    
+    return feedExists;
 }
 
-- (void)grabFeed:(int)whatFeed url:(NSString *)portalAddress 
+- (void)grabArticles:(int)whatFeed url:(NSString *)portalAddress 
 {
     LOG_CML;
     
-    // Reset arrays
-    localNewsFeed = [[NSMutableArray alloc] init];
-	localVideoFeed = [[NSMutableArray alloc] init];
-	localAudioFeed = [[NSMutableArray alloc] init];
-    
+    // Reset array because ... well ... yeah that.
+    switch (whatFeed) 
+    {
+        case kNews:
+            localNewsFeed = [[NSMutableArray alloc] init];
+            break;
+        case kVideo:
+            localVideoFeed = [[NSMutableArray alloc] init];
+            break;
+        case kAudio:
+            localAudioFeed = [[NSMutableArray alloc] init];
+            break;
+        default:
+            break;
+    }
+
     NSURL *url = [NSURL URLWithString: portalAddress];
     
     // Create a new rssParser object based on the TouchXML "CXMLDocument" class, this is the
@@ -133,8 +131,6 @@
     }
     
     [prefs synchronize];
-    [self hideActivityIndicator];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (BOOL)checkIsDataSourceAvailable 
@@ -181,7 +177,8 @@
     // create an array of chars for all control characters between 0×00 and 0×1F, apart from \t, \n, \f and \r (which are at code points 0×09, 0×0A, 0×0C and 0×0D respectively)
     
     // convert this array into an NSCharacterSet
-    NSString *controlCharString = [NSString stringWithCString:charCode length:28];
+    // http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSString_Class/Reference/NSString.html#//apple_ref/doc/uid/20000154-BAJJAICE
+    NSString *controlCharString = [NSString stringWithCString:charCode encoding:NSASCIIStringEncoding];
     NSCharacterSet *controlCharSet = [NSCharacterSet characterSetWithCharactersInString:controlCharString];
     
     // request that the scanner ignores these characters

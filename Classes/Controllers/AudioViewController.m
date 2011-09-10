@@ -12,8 +12,6 @@
 #import "VideoViewController.h"
 #import "iPortalAppDelegate.h"
 #import "PlayerViewController.h"
-#import "PortalArticle.h"
-#import "PortalViews.h"
 
 
 @implementation AudioViewController
@@ -24,26 +22,18 @@
 @synthesize playerViewController;
 @synthesize newsViewController;
 @synthesize videoViewController;
+@synthesize portalFeeds;
+@synthesize portalArticle;
 
 - (void)dealloc 
 {
     [newsViewController release];
     [videoViewController release];
     [playerViewController release];
+    [portalViews release];
+    [portalFeeds release];
+    [portalArticle release];
     [super dealloc];
-}
-
-- (id)initWithFeed:(NSMutableArray *)feed
-{
-    [super initWithNibName:@"AudioView" bundle:nil];
-    portalFeeds = feed;
-    
-    return self;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 }
 
 - (void)viewDidLoad 
@@ -52,6 +42,7 @@
 
     [super viewDidLoad];
     [self setupView];
+    [[PortalViews alloc] init];
 }
 
 - (void)didReceiveMemoryWarning 
@@ -63,12 +54,46 @@
 {}
 
 #pragma mark -
-#pragma mark Delegate 
+- (void)setupView 
+{
+    LOG_CML;
+    
+#if __IPHONE_3_0
+    // UIViewController slips up under status bar. We need to reset it to where it should be placed
+    self.view.frame = [[UIScreen mainScreen] applicationFrame];
+#endif
+    
+    [self setBackgroundImage]; 
+    
+    portalFeeds = [[PortalFeeds alloc] init];
+    [portalFeeds checkFeed:kAudio];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+
+- (void)setBackgroundImage 
+{
+	LOG_CML;
+    
+	UIImageView *tempUIImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Bkgnd.png"]];
+	self.backgroundImage = tempUIImage;
+	[tempUIImage release];
+	
+	[self.view addSubview:backgroundImage];
+	[self.view sendSubviewToBack:backgroundImage];
+}
+
+#pragma mark -
+#pragma mark Delegates 
 - (void)aboutViewControllerDidFinish:(AboutViewController *)controller 
 {
     LOG_CML;
     
 	[self dismissModalViewControllerAnimated:YES];
+}
+
+-(void)feedItems:(NSArray *)items
+{
+    
 }
 
 #pragma mark -
@@ -79,12 +104,11 @@
 	
     [iPortalAppDelegate playEffect:kEffectButton];
     [iPortalAppDelegate playEffect:kEffectPage];
-	AboutViewController *controller = [[AboutViewController alloc] initWithNibName:@"AboutView" bundle:nil];
-	controller.delegate = self;
-	
-	[self presentModalViewController:controller animated:YES];
-	
-	[controller release];
+    
+	AboutViewController *tempAboutViewController = [[AboutViewController alloc] init];
+	tempAboutViewController.delegate = self;
+	[self presentModalViewController:tempAboutViewController animated:YES];
+	[tempAboutViewController release];
 }
 
 - (IBAction)showNewsList 
@@ -93,7 +117,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [self switchView:kNews];
+    [portalViews switchView:kNews];
 }
 - (IBAction)showVideoList 
 {
@@ -101,7 +125,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [self switchView:kVideo];
+    [portalViews switchView:kVideo];
 }
 
 - (IBAction)refreshList
@@ -111,26 +135,14 @@
     [iPortalAppDelegate playEffect:kEffectButton];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    [po grabFeed:kAudio url:@"http://www.tumunu.com/iportal/audio-feed.php"];
+    [portalFeeds grabFeed:kAudio url:@"http://www.tumunu.com/iportal/audio-feed.php"];
     [self.audioTable reloadData];
-}
-
-- (void)setBackgroundImage 
-{
-	LOG_CML;
-    
-	UIImageView *customBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Bkgnd.png"]];
-	self.background = customBackground;
-	[customBackground release];
-	
-	[self.view addSubview:background];
-	LOG(@"Added background subview %@ to %@", background, self.view);
-	[self.view sendSubviewToBack:background];
 }
 
 #pragma mark Table view methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
+{
     return 1;
 }
 
@@ -140,7 +152,7 @@
 {
     LOG_CML;
     
-	NSInteger feedCount = [feed.localAudioFeed count];
+	NSInteger feedCount = [portalFeeds.localAudioFeed count];
 	LOG(@"Number of rows: %d",feedCount);
     
 	return feedCount;
@@ -158,28 +170,20 @@
 {
 	LOG(@"cellForRowAtIndexPath %@", indexPath);
     
-	UITableViewCell *customCell = (UITableViewCell*) [tableView dequeueReusableCellWithIdentifier:@"AudioTableCell"];
+	UITableViewCell *customCell = (UITableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"AudioTableCell"];
     
 	if (customCell == nil) 
     {
 		[[NSBundle mainBundle] loadNibNamed:@"AudioTableCell" owner:self options:NULL];
 		customCell = audioTableCell;
-		LOG(@"customizing %@", customCell);
-	} 
-    else 
-    {
-		LOG(@"reusing %@", customCell.reuseIdentifier);
 	}
     
-    LOG(@"Set cell content");
-	UILabel* titleLabel = (UILabel*) [customCell viewWithTag:1];
-	UILabel* dateLabel = (UILabel*) [customCell viewWithTag:3];
+	UILabel *titleLabel = (UILabel *) [customCell viewWithTag:1];
+	UILabel *dateLabel = (UILabel *) [customCell viewWithTag:3];
     
-    int i = indexPath.row;
-    NSDictionary * s = [feed.localAudioFeed objectAtIndex:i];
-    
-	titleLabel.text = [s objectForKey:@"title"];
-    dateLabel.text = [s objectForKey:@"pubDate"];
+    NSDictionary *article = [portalFeeds.localAudioFeed objectAtIndex:indexPath.row];
+	titleLabel.text = [article objectForKey:@"title"];
+    dateLabel.text = [article objectForKey:@"pubDate"];
 	
     return customCell;
 }
@@ -190,45 +194,27 @@
     LOG_CML;
 
     [iPortalAppDelegate playEffect:kEffectPage];
-    NSDictionary * s = [feed.localAudioFeed objectAtIndex:indexPath.row];
-    //[Article.cellURL = [s objectForKey:@"link"];
+    NSDictionary *article = [portalFeeds.localAudioFeed objectAtIndex:indexPath.row];
+    self.portalArticle.articleURL = [article objectForKey:@"link"];
         
     [self showPlayer];
 }
 
-#prama mark -
-- (void)setupView 
-{
-    LOG_CML;
-    
-#if __IPHONE_3_0
-    // UIViewController slips up under status bar. We need to reset it to where it should be placed
-    self.view.frame = [[UIScreen mainScreen] applicationFrame];
-#endif
-    
-    [self setBackgroundImage]; 
-
-    [feed checkFeed:kAudio];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-}
-
+#pragma mark -
 - (void)showPlayer 
 {
     LOG_CML;
     
-    PlayerViewController *tpvc = [[PlayerViewController alloc] initWithNibName:@"PlayerView" bundle:nil];
-    self.ipvc = tpvc;
-    [tpvc release];
+    PlayerViewController *tempPlayerViewController = [[PlayerViewController alloc] init];
+    self.playerViewController = tempPlayerViewController;
+    [tempPlayerViewController release];
     
     UIView *currentView = self.view;
-	// get the the underlying UIWindow, or the view containing the current view view
 	UIView *theWindow = [currentView superview];
 	
-	// remove the current view and replace with myView1
 	[currentView removeFromSuperview];
-    [theWindow addSubview:[ipvc view]];
+    [theWindow addSubview:[playerViewController view]];
 	
-	// set up an animation for the transition between the views
 	CATransition *animation = [CATransition animation];
 	[animation setDuration:0.85];
 	[animation setType:kCATransitionPush];

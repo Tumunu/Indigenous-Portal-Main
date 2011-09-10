@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TouchXML.h"
-#import "PortalFeeds.h"
+#import "RootViewController.h"
 
 // Yes this could just be a plain enum
 typedef enum 
@@ -18,26 +18,19 @@ typedef enum
 	kNumEffects
 } Effect;
 
-@class RootNavViewController;
 
 @interface iPortalAppDelegate : NSObject <UIApplicationDelegate> 
 {
     UIWindow *window;
-    UIView *blankBaseView;
-    UIViewController *blankBaseViewController;
-    
-    RootNavViewController *rootNavViewController;
-    PortalFeeds *feeds;
+    RootViewController *rootViewController;
+
         
     BOOL applicationActive;
-    BOOL isDataSourceAvailable;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) UIView *blankBaseView;
-@property (nonatomic, retain) UIViewController *blankBaseViewController;
-@property (nonatomic, retain) RootNavViewController *rootNavViewController;
-@property (nonatomic, retain) PortalFeeds *feeds;
+@property (nonatomic, retain) RootViewController *rootViewController;
 @property (readonly) BOOL applicationActive;
 
 -(void)setupApp;

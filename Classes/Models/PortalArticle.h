@@ -11,11 +11,11 @@
 
 @interface PortalArticle : NSObject
 {
-    NSString * cellURL;
+    NSString *articleURL;
     int whatView;
 }
 
-@property (nonatomic, retain) NSString * cellURL;
+@property (nonatomic, retain) NSString *articleURL;
 @property (nonatomic) int whatView;
 
 

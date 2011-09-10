@@ -7,20 +7,34 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TouchXML.h"
+
+
+@protocol PortalFeedsDelegate <NSObject>
+@required
+-(void)feedItems:(NSArray *)items;
+
+@end
+
 
 @interface PortalFeeds : NSObject
 {
+    NSDate *feedDate;
     NSMutableArray *localNewsFeed;
     NSMutableArray *localVideoFeed;
     NSMutableArray *localAudioFeed;
+    
+    BOOL isDataSourceAvailable;
 }
+
 
 @property (nonatomic, retain) NSMutableArray *localNewsFeed;
 @property (nonatomic, retain) NSMutableArray *localVideoFeed;
 @property (nonatomic, retain) NSMutableArray *localAudioFeed;
 
-- (void)checkFeed:(int)whatFeed;
-- (void)grabFeed:(int)whatFeed url:(NSString *)portalAddress;
+
+- (BOOL)checkIfFeedArrayExists:(int)whatFeed;
+- (void)grabArticles:(int)whatFeed url:(NSString *)portalAddress;
 - (BOOL)checkIsDataSourceAvailable;
 - (NSString *)springClean:(NSString *)sourceString;
 

@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "AboutViewController.h"
 #import "PortalViews.h"
+#import "PortalFeeds.h"
+#import "PortalArticle.h"
 
 @class PlayerViewController;
 @class NewsViewController;
 @class VideoViewController;
 
-@interface AudioViewController : UIViewController <AboutViewControllerDelegate, UITableViewDelegate, UITableViewDataSource> 
+@interface AudioViewController : UIViewController <AboutViewControllerDelegate, PortalFeedsDelegate, UITableViewDelegate, UITableViewDataSource> 
 {
     UIImageView *backgroundImage;
     UITableView *audioTable;
@@ -23,6 +25,9 @@
     PlayerViewController *playerViewController;
     NewsViewController *newsViewController;
     VideoViewController *videoViewController;
+    PortalViews *portalViews;
+    PortalFeeds *portalFeeds;
+    PortalArticle *portalArticle;
 }
 
 @property (nonatomic, retain) UIImageView *backgroundImage;
@@ -31,6 +36,8 @@
 @property (nonatomic, retain) PlayerViewController *playerViewController;
 @property (nonatomic, retain) NewsViewController *newsViewController;
 @property (nonatomic, retain) VideoViewController *videoViewController;
+@property (nonatomic, retain) PortalFeeds *portalFeeds;
+@property (nonatomic, retain) PortalArticle *portalArticle;
 
 - (IBAction)showAbout;
 - (IBAction)showNewsList;

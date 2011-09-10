@@ -15,9 +15,9 @@
 {
     if ((self = [super init]) != NULL)
 	{
-        newsViewController = [[NewsViewController alloc] initWithNibName:@"NewsView" bundle:nil];
-        videoViewController = [[VideoViewController alloc] initWithNibName:@"VideoView" bundle:nil];
-        audioViewController = [[AudioViewController alloc] initWithNibName:@"AudioView" bundle:nil];
+        newsViewController = [[NewsViewController alloc] init];
+        videoViewController = [[VideoViewController alloc] init];
+        audioViewController = [[AudioViewController alloc] init];
 	}
     return(self);
 }
@@ -32,16 +32,14 @@
 - (void)switchView:(int)whatView
 {
     // Pass a blank array
-    NSMutableArray *dud = [NSMutableArray array];
-    [self switchView:whatView withFeed:dud];
+    NSArray *dudArray = [NSArray array];
+    [self switchView:whatView withFeed:dudArray];
 }
 
-- (void)switchView:(int)whatView withFeed:(NSMutableArray *)feed
+- (void)switchView:(UIView *)currentView (int)whatView withFeed:(NSArray *)feed
 {
     LOG_CML;
     
-    UIView *currentView = self.view;
-	// get the the underlying UIWindow, or the view containing the current view view
 	UIView *theWindow = [currentView superview];
     // remove the current view
     [currentView removeFromSuperview];

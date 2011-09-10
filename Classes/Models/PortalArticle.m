@@ -6,14 +6,12 @@
 //  Copyright (c) 2011 Tumunu. All rights reserved.
 //
 
-#import "ProtalArticle.h"
-
+#import "PortalArticle.h"
 
 
 @implementation PortalArticle
 
-@synthesize cellURL;
-@synthesize whatView;
+@synthesize articleURL, whatView;
 
 
 @end

@@ -9,9 +9,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "iPortalAppDelegate.h"
 #import "RootNavViewController.h"
-#import "NewsViewController.h"
-#import "AudioViewController.h"
-#import "VideoViewController.h"
 #import "CustomAlertViewController.h"
 #import "PortalFeeds.h"
 #import "PortalViews.h"
@@ -20,9 +17,6 @@
 @implementation RootNavViewController
 
 @synthesize backgroundImage;
-@synthesize newsViewController;
-@synthesize audioViewController;
-@synthesize videoViewController;
 @synthesize customAlertViewController;
 @synthesize portalFeeds;
 @synthesize portalViews;
@@ -37,9 +31,6 @@
         [customAlertViewController release];
     }
     
-    [newsViewController release];
-    [audioViewController release];
-    [videoViewController release];
     [portalFeeds release];
     [portalViews release];
     
@@ -63,15 +54,15 @@
 {
     LOG_CML;
     
+    [self setBackgroundImage];
     [super viewDidLoad];
-    [self setBackgroundImage]; 
     
     portalViews = [[PortalViews alloc] init];
     
     // Should also be placed elsewhere but pfft...
     if(![feeds checkIsDataSourceAvailable]) 
     {
-        CustomAlertViewController * tempCustomeAlertViewController = [[CustomAlertViewController alloc] initWithNibName:@"CustomAlertView" bundle:nil];
+        CustomAlertViewController * tempCustomeAlertViewController = [[CustomAlertViewController alloc] init];
         self.customAlertViewController = tempCustomeAlertViewController;
         [tempCustomeAlertViewController release];
         
@@ -106,7 +97,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [portalViews switchView:kNews withFeed:portalFeeds.localNewsFeed];
+    [portalViews switchView:kNews withFeed:[portalFeeds.localNewsFeed copy]];
 }
 
 - (IBAction)showVideoList 
@@ -115,7 +106,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [portalViews switchView:kVideo withFeed:portalFeeds.localVideoFeed];
+    [portalViews switchView:kVideo withFeed:[portalFeeds.localVideoFeed copy]];
 }
 
 - (IBAction)showAudioList 
@@ -124,7 +115,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [portalViews switchView:kAudio withFeed:portalFeeds.localAudioFeed];
+    [portalViews switchView:kAudio withFeed:[portalFeeds.localAudioFeed copy]];
 }
 
 #pragma mark -
