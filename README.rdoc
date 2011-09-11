@@ -1,0 +1,9 @@
+= Indigenous Portal
+
+This project was originally made with the then "new" iPhone SDK. The original methodology was shit so it's getting a complete revamp.
+
+== It doesn't work
+
+Learn to read, I did. Note: revamp & shit.
+
+It will work "as is" if you know what you're doing, else wait until i've completed the revamp.
