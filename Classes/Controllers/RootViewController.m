@@ -49,8 +49,8 @@
     RootNavViewController *tempRootNavViewController = [[RootNavViewController alloc] initWithFeed:feeds];
     self.rootNavViewController = tempRootNavViewController;
     [tempRootNavViewController release];
-    
-    [self.view insertSubview:[rootNavViewController view] atIndex:1];
+	
+	[self presentModalViewController:rootNavViewController animated:YES];
 }
 
 
@@ -105,6 +105,11 @@
     }
     
     [flickrData release];
+}
+
+- (void)rootNavHide
+{    
+	[self dismissModalViewControllerAnimated:YES];
 }
 
 @end

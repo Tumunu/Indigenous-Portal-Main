@@ -6,6 +6,7 @@
 //  Copyright 2009 Make Things Talk. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "iPortalAppDelegate.h"
 #import "RootNavViewController.h"
 #import "PortalFeeds.h"
@@ -18,6 +19,7 @@
 @synthesize customAlertViewController;
 @synthesize portalFeeds;
 @synthesize portalViews;
+@synthesize delegate;
 
 
 - (void)dealloc 
@@ -60,7 +62,7 @@
     // Should also be placed elsewhere but pfft...
     if(![portalFeeds checkIsDataSourceAvailable]) 
     {
-
+        //TODO: custom alert
     }
 }
 
@@ -78,8 +80,8 @@
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [portalViews switchView:kNews withFeed:[portalFeeds.localNewsFeed copy]];
+    [self.delegate rootNavHide];
+    [portalViews switchView:[[self view] superview] whatView:kNews withFeed:[portalFeeds.localNewsFeed copy]];
 }
 
 - (IBAction)showVideoList 
@@ -87,8 +89,8 @@
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [portalViews switchView:kVideo withFeed:[portalFeeds.localVideoFeed copy]];
+    [self.delegate rootNavHide];
+    [portalViews switchView:[[self view] superview] whatView:kVideo withFeed:[portalFeeds.localVideoFeed copy]];
 }
 
 - (IBAction)showAudioList 
@@ -96,8 +98,8 @@
     LOG_CML;
     
     [iPortalAppDelegate playEffect:kEffectButton];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [portalViews switchView:kAudio withFeed:[portalFeeds.localAudioFeed copy]];
+    [self.delegate rootNavHide];
+    [portalViews switchView:[[self view] superview] whatView:kAudio withFeed:[portalFeeds.localAudioFeed copy]];
 }
 
 #pragma mark -

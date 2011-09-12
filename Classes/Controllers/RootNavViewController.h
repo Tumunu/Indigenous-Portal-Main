@@ -13,6 +13,11 @@
 
 @class CustomAlertViewController;
 
+@protocol RootNavDelegate
+@required
+- (void)rootNavHide;
+@end
+
 
 @interface RootNavViewController : UIViewController 
 {
@@ -21,11 +26,15 @@
     CustomAlertViewController *customAlertViewController;
     PortalFeeds *portalFeeds;
     PortalViews *portalViews;
+    
+    id<RootNavDelegate> delegate;
 }
 
 @property (nonatomic, retain) UIImageView *backgroundImage;
 @property (nonatomic, retain) CustomAlertViewController *customAlertViewController;
 @property (nonatomic, retain) PortalFeeds *portalFeeds;
+@property (nonatomic, retain) PortalViews *portalViews;
+@property (nonatomic, assign) id <RootNavDelegate> delegate;
 
 - (id)initWithFeed:(PortalFeeds *)portalFeeds;
 - (IBAction)showNewsList;

@@ -30,6 +30,12 @@
     [audioViewController release];
 }
 
+/*
+ Switch View
+ 
+ 1. On view choice animate nav view top to bottom
+ 2. slide in new view
+ */
 - (void)switchView:(UIView *)currentView whatView:(int)nextView withFeed:(NSArray *)feed
 {
     LOG_CML;
@@ -37,13 +43,13 @@
     switch(nextView) 
     {
         case 1:
-            [currentView insertSubview:[newsViewController view] atIndex:<#(NSInteger)#>];
+            [currentView insertSubview:[newsViewController view] atIndex:1];
             break;
         case 2:
-            [currentView insertSubview:[videoViewController view] atIndex:<#(NSInteger)#>];
+            [currentView insertSubview:[videoViewController view] atIndex:1];
             break;
         case 3:
-            [currentView insertSubview:[audioViewController view] atIndex:<#(NSInteger)#>];
+            [currentView insertSubview:[audioViewController view] atIndex:1];
             break;
     }
     
@@ -53,10 +59,10 @@
 	[animation setSubtype:kCATransitionFromRight];
 	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 	
-	[[currentView layer] addAnimation:animation forKey:@"swap"];    
+	[[currentView layer] addAnimation:animation forKey:@"viewSwitch"];    
 }
 
-- (void)switchView:(UIView *)currentView (int)whatView withFeed:(NSArray *)feed
+- (void)showAlert
 {
     CustomAlertViewController * tempCustomeAlertViewController = [[CustomAlertViewController alloc] init];
     self.customAlertViewController = tempCustomeAlertViewController;
