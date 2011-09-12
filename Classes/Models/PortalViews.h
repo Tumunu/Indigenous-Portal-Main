@@ -7,6 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NewsViewController.h"
+#import "VideoViewController.h"
+#import "AudioViewController.h"
+#import "CustomAlertViewController.h"
 
 enum ViewType
 {
@@ -15,10 +19,6 @@ enum ViewType
     kVideo,
 	kNumViewTypes
 };
-
-@class NewsViewController;
-@class VideoViewController;
-@class AudioViewController;
 
 @interface PortalViews : NSObject
 {
@@ -32,7 +32,6 @@ enum ViewType
 @property (nonatomic, retain)AudioViewController *audioViewController;
 
 
-- (void)switchView:(int)whatView;
-- (void)switchView:(int)whatView withFeed:(NSMutableArray *)feed;
+- (void)switchView:(UIView *)currentView whatView:(int)nextView withFeed:(NSArray *)feed;
 
 @end

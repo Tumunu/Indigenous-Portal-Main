@@ -6,10 +6,8 @@
 //  Copyright 2009 Make Things Talk. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
 #import "iPortalAppDelegate.h"
 #import "RootNavViewController.h"
-#import "CustomAlertViewController.h"
 #import "PortalFeeds.h"
 #import "PortalViews.h"
 
@@ -60,25 +58,9 @@
     portalViews = [[PortalViews alloc] init];
     
     // Should also be placed elsewhere but pfft...
-    if(![feeds checkIsDataSourceAvailable]) 
+    if(![portalFeeds checkIsDataSourceAvailable]) 
     {
-        CustomAlertViewController * tempCustomeAlertViewController = [[CustomAlertViewController alloc] init];
-        self.customAlertViewController = tempCustomeAlertViewController;
-        [tempCustomeAlertViewController release];
-        
-        // Use “bounds” instead of “applicationFrame” — the latter will introduce 
-        // a 20 pixel empty status bar (unless you want that..)
-        self.customAlertViewController.view.frame = [UIScreen mainScreen].applicationFrame;
-        self.customAlertViewController.view.alpha = 0.0;
-        [window addSubview:[customAlertViewController view]];
-        
-        // Don't yell at me about not using NULL.  They're the same, it's just convention 
-        // to use one for pointers and the other one for everything else.
-        [UIView beginAnimations:nil context:nil];    
-        [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-        [UIView setAnimationDuration:0.33];  //.25 looks nice as well.
-        self.customAlertViewController.view.alpha = 1.0;
-        [UIView commitAnimations];
+
     }
 }
 

@@ -6,6 +6,7 @@
 //  Copyright (c) 2011 Tumunu. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "PortalViews.h"
 
 @implementation PortalViews
@@ -29,45 +30,50 @@
     [audioViewController release];
 }
 
-- (void)switchView:(int)whatView
+- (void)switchView:(UIView *)currentView whatView:(int)nextView withFeed:(NSArray *)feed
 {
-    // Pass a blank array
-    NSArray *dudArray = [NSArray array];
-    [self switchView:whatView withFeed:dudArray];
+    LOG_CML;
+
+    switch(nextView) 
+    {
+        case 1:
+            [currentView insertSubview:[newsViewController view] atIndex:<#(NSInteger)#>];
+            break;
+        case 2:
+            [currentView insertSubview:[videoViewController view] atIndex:<#(NSInteger)#>];
+            break;
+        case 3:
+            [currentView insertSubview:[audioViewController view] atIndex:<#(NSInteger)#>];
+            break;
+    }
+    
+	CATransition *animation = [CATransition animation];
+	[animation setDuration:0.85];
+	[animation setType:kCATransitionPush];
+	[animation setSubtype:kCATransitionFromRight];
+	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+	
+	[[currentView layer] addAnimation:animation forKey:@"swap"];    
 }
 
 - (void)switchView:(UIView *)currentView (int)whatView withFeed:(NSArray *)feed
 {
-    LOG_CML;
-    
-	UIView *theWindow = [currentView superview];
-    // remove the current view
-    [currentView removeFromSuperview];
-    
-    switch(whatView) 
-    {
-        case 1:
-            // replace with mvc
-            [theWindow addSubview:[mvc view]];
-            break;
-        case 2:
-            // replace vvc
-            [theWindow addSubview:[vvc view]];
-            break;
-        case 3:
-            // replace with avc
-            [theWindow addSubview:[avc view]];
-            break;
-    }
-    
-	// set up an animation for the transition between the views
-	CATransition *animation = [CATransition animation];
-	[animation setDuration:0.85];
-	[animation setType:kCATransitionPush];
-	[animation setSubtype:kCATransitionFromTop];
-	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-	
-	[[theWindow layer] addAnimation:animation forKey:@"swap"];    
-}
+    CustomAlertViewController * tempCustomeAlertViewController = [[CustomAlertViewController alloc] init];
+    self.customAlertViewController = tempCustomeAlertViewController;
+    [tempCustomeAlertViewController release];
 
+    // Use “bounds” instead of “applicationFrame” — the latter will introduce 
+    // a 20 pixel empty status bar (unless you want that..)
+    self.customAlertViewController.view.frame = [UIScreen mainScreen].applicationFrame;
+    self.customAlertViewController.view.alpha = 0.0;
+    [window addSubview:[customAlertViewController view]];
+
+    // Don't yell at me about not using NULL.  They're the same, it's just convention 
+    // to use one for pointers and the other one for everything else.
+    [UIView beginAnimations:nil context:nil];    
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:0.33];  //.25 looks nice as well.
+    self.customAlertViewController.view.alpha = 1.0;
+    [UIView commitAnimations];
+}
 @end
