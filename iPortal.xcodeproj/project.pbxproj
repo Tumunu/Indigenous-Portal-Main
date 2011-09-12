@@ -50,7 +50,6 @@
 		41AF6E1C141987020060A8C8 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AF6E08141987020060A8C8 /* PlayerViewController.m */; };
 		41AF6E1E141987020060A8C8 /* RssViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AF6E0A141987020060A8C8 /* RssViewController.m */; };
 		41AF6E20141987020060A8C8 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AF6E0C141987020060A8C8 /* VideoViewController.m */; };
-		41AF6E22141987020060A8C8 /* AboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AF6E0F141987020060A8C8 /* AboutView.m */; };
 		41AF6E34141987420060A8C8 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41AF6E25141987420060A8C8 /* AboutView.xib */; };
 		41AF6E36141987420060A8C8 /* ActivityIndicator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41AF6E26141987420060A8C8 /* ActivityIndicator.xib */; };
 		41AF6E38141987420060A8C8 /* AudioTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41AF6E27141987420060A8C8 /* AudioTableCell.xib */; };
@@ -175,8 +174,6 @@
 		41AF6E0A141987020060A8C8 /* RssViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RssViewController.m; sourceTree = "<group>"; };
 		41AF6E0B141987020060A8C8 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		41AF6E0C141987020060A8C8 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
-		41AF6E0E141987020060A8C8 /* AboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutView.h; sourceTree = "<group>"; };
-		41AF6E0F141987020060A8C8 /* AboutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutView.m; sourceTree = "<group>"; };
 		41AF6E25141987420060A8C8 /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
 		41AF6E26141987420060A8C8 /* ActivityIndicator.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityIndicator.xib; sourceTree = "<group>"; };
 		41AF6E27141987420060A8C8 /* AudioTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioTableCell.xib; sourceTree = "<group>"; };
@@ -483,8 +480,6 @@
 		41AF6E0D141987020060A8C8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				41AF6E0E141987020060A8C8 /* AboutView.h */,
-				41AF6E0F141987020060A8C8 /* AboutView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -744,7 +739,6 @@
 				41AF6E1C141987020060A8C8 /* PlayerViewController.m in Sources */,
 				41AF6E1E141987020060A8C8 /* RssViewController.m in Sources */,
 				41AF6E20141987020060A8C8 /* VideoViewController.m in Sources */,
-				41AF6E22141987020060A8C8 /* AboutView.m in Sources */,
 				41AF6E71141988020060A8C8 /* CXMLDocument_CreationExtensions.m in Sources */,
 				41AF6E73141988020060A8C8 /* CXMLNode_CreationExtensions.m in Sources */,
 				41AF6E75141988020060A8C8 /* CXHTMLDocument.m in Sources */,
