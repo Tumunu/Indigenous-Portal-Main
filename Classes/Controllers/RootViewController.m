@@ -112,4 +112,16 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+    if ([[event touchesForView:[self view]] count] > 1) 
+    {
+        LOG(@"%d active touches",[[event touchesForView:self.view] count]) ;
+        
+        [self presentModalViewController:rootNavViewController animated:YES];        
+    }
+    [super touchesBegan:touches withEvent:event] ;
+}
+
 @end

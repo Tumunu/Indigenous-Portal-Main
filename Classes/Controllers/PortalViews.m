@@ -16,6 +16,7 @@
 {
     if ((self = [super init]) != NULL)
 	{
+        // Yes I know this shouldn't be here
         newsViewController = [[NewsViewController alloc] init];
         videoViewController = [[VideoViewController alloc] init];
         audioViewController = [[AudioViewController alloc] init];
