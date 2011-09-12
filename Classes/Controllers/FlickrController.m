@@ -31,7 +31,7 @@ NSString *const FlickrAPIKey = @"000000000000";
 {
 	NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    LOG(@"CALLING:%@", jsonString);  
+    LOG(@"Flicker JSON:%@", jsonString);  
     
 	NSDictionary *results = [jsonString JSONValue];
     NSArray *photos = [[results objectForKey:@"photos"] objectForKey:@"photo"];
@@ -51,9 +51,7 @@ NSString *const FlickrAPIKey = @"000000000000";
             [flickrImage setTitle:@"Untitled"];
         }
         
-		photoURLString = [NSString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@_l.jpg", [photo objectForKey:@"farm"], [photo objectForKey:@"server"], [photo objectForKey:@"id"], [photo objectForKey:@"secret"]];
-        
-		[flickrImage setImageURL:[NSURL URLWithString:photoURLString]]; 
+		[flickrImage setImageURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://farm%@.static.flickr.com/%@/%@_%@_l.jpg", [photo objectForKey:@"farm"], [photo objectForKey:@"server"], [photo objectForKey:@"id"], [photo objectForKey:@"secret"]]]]; 
         [flickrImageArray addObject:flickrImage];
 	}
     

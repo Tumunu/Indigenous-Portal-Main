@@ -75,7 +75,7 @@
 {}
 
 #pragma mark -
-- (IBAction)showNewsList 
+- (IBAction)showNews 
 {
     LOG_CML;
     
@@ -84,7 +84,7 @@
     [portalViews switchView:[[self view] superview] whatView:kNews withFeed:[portalFeeds.localNewsFeed copy]];
 }
 
-- (IBAction)showVideoList 
+- (IBAction)showVideo 
 {
     LOG_CML;
     
@@ -93,7 +93,7 @@
     [portalViews switchView:[[self view] superview] whatView:kVideo withFeed:[portalFeeds.localVideoFeed copy]];
 }
 
-- (IBAction)showAudioList 
+- (IBAction)showAudio 
 {
     LOG_CML;
     

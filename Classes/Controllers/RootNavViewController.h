@@ -37,9 +37,9 @@
 @property (nonatomic, assign) id <RootNavDelegate> delegate;
 
 - (id)initWithFeed:(PortalFeeds *)portalFeeds;
-- (IBAction)showNewsList;
-- (IBAction)showVideoList;
-- (IBAction)showAudioList;
+- (IBAction)showNews;
+- (IBAction)showVideo;
+- (IBAction)showAudio;
 
 - (void)setBackgroundImage;
 
