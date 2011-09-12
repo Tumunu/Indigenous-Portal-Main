@@ -38,6 +38,7 @@
 		416818590FB83A1400BA4BBC /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 416818580FB83A1400BA4BBC /* RegexKitLite.m */; };
 		416818990FB83B9400BA4BBC /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 416818980FB83B9400BA4BBC /* libicucore.dylib */; };
 		416819DC0FB8CC1900BA4BBC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416819DB0FB8CC1900BA4BBC /* SystemConfiguration.framework */; };
+		418A6787141DB44900ED1C30 /* PortalViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 418A6786141DB44800ED1C30 /* PortalViews.m */; };
 		41ADF38E0FBE7B3000EC958D /* back-163dpi.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ADF38D0FBE7B3000EC958D /* back-163dpi.png */; };
 		41ADF75A0FBEF10A00EC958D /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41ADF7590FBEF10A00EC958D /* Entitlements.plist */; };
 		41AF6DEB141982DC0060A8C8 /* iPortalWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41AF6DEA141982DC0060A8C8 /* iPortalWindow-iPad.xib */; };
@@ -80,7 +81,6 @@
 		41AF6E89141988020060A8C8 /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AF6E6F141988020060A8C8 /* CTidy.m */; };
 		41AF6E8E14198C070060A8C8 /* PortalFeeds.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AF6E8D14198C070060A8C8 /* PortalFeeds.m */; };
 		41B45025141990F2007CAA08 /* PortalArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B45024141990F2007CAA08 /* PortalArticle.m */; };
-		41B450341419A04B007CAA08 /* PortalViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B450331419A04B007CAA08 /* PortalViews.m */; };
 		41B4505E141B37E6007CAA08 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B4505D141B37E6007CAA08 /* RootViewController.m */; };
 		41B4506E141B3D83007CAA08 /* FlickrImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B4506D141B3D83007CAA08 /* FlickrImage.m */; };
 		41B4508F141B3F31007CAA08 /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B45073141B3F31007CAA08 /* NSObject+JSON.m */; };
@@ -153,6 +153,8 @@
 		416818580FB83A1400BA4BBC /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		416818980FB83B9400BA4BBC /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		416819DB0FB8CC1900BA4BBC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		418A6785141DB44700ED1C30 /* PortalViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortalViews.h; sourceTree = "<group>"; };
+		418A6786141DB44800ED1C30 /* PortalViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortalViews.m; sourceTree = "<group>"; };
 		41ADF38D0FBE7B3000EC958D /* back-163dpi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-163dpi.png"; sourceTree = "<group>"; };
 		41ADF7590FBEF10A00EC958D /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		41AF6DEA141982DC0060A8C8 /* iPortalWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "iPortalWindow-iPad.xib"; path = "iPad/iPortalWindow-iPad.xib"; sourceTree = "<group>"; };
@@ -220,8 +222,6 @@
 		41AF6E8D14198C070060A8C8 /* PortalFeeds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortalFeeds.m; sourceTree = "<group>"; };
 		41B45023141990F2007CAA08 /* PortalArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortalArticle.h; sourceTree = "<group>"; };
 		41B45024141990F2007CAA08 /* PortalArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortalArticle.m; sourceTree = "<group>"; };
-		41B450321419A04B007CAA08 /* PortalViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortalViews.h; sourceTree = "<group>"; };
-		41B450331419A04B007CAA08 /* PortalViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortalViews.m; sourceTree = "<group>"; };
 		41B4505C141B37E5007CAA08 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		41B4505D141B37E6007CAA08 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		41B4506C141B3D82007CAA08 /* FlickrImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrImage.h; sourceTree = "<group>"; };
@@ -451,6 +451,8 @@
 		41AF6DFA141987020060A8C8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				418A6785141DB44700ED1C30 /* PortalViews.h */,
+				418A6786141DB44800ED1C30 /* PortalViews.m */,
 				41B450B0141B5212007CAA08 /* FlickrController.h */,
 				41B450B1141B5213007CAA08 /* FlickrController.m */,
 				41B4505C141B37E5007CAA08 /* RootViewController.h */,
@@ -570,8 +572,6 @@
 			children = (
 				41AF6E8C14198C070060A8C8 /* PortalFeeds.h */,
 				41AF6E8D14198C070060A8C8 /* PortalFeeds.m */,
-				41B450321419A04B007CAA08 /* PortalViews.h */,
-				41B450331419A04B007CAA08 /* PortalViews.m */,
 				41B4506C141B3D82007CAA08 /* FlickrImage.h */,
 				41B4506D141B3D83007CAA08 /* FlickrImage.m */,
 				41B45023141990F2007CAA08 /* PortalArticle.h */,
@@ -754,7 +754,6 @@
 				41AF6E89141988020060A8C8 /* CTidy.m in Sources */,
 				41AF6E8E14198C070060A8C8 /* PortalFeeds.m in Sources */,
 				41B45025141990F2007CAA08 /* PortalArticle.m in Sources */,
-				41B450341419A04B007CAA08 /* PortalViews.m in Sources */,
 				41B4505E141B37E6007CAA08 /* RootViewController.m in Sources */,
 				41B4506E141B3D83007CAA08 /* FlickrImage.m in Sources */,
 				41B4508F141B3F31007CAA08 /* NSObject+JSON.m in Sources */,
@@ -772,6 +771,7 @@
 				41B450A7141B3F31007CAA08 /* SBJsonTokeniser.m in Sources */,
 				41B450A9141B3F31007CAA08 /* SBJsonWriter.m in Sources */,
 				41B450B2141B5213007CAA08 /* FlickrController.m in Sources */,
+				418A6787141DB44900ED1C30 /* PortalViews.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

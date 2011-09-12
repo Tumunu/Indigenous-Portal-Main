@@ -100,7 +100,6 @@
                 [localNewsFeed addObject:[newsItem copy]];
                 break;
             case kVideo:
-                LOG(@"Video Array - %@",[newsItem copy]);
                 [localVideoFeed addObject:[newsItem copy]];
                 break;
             case kAudio:
@@ -140,7 +139,6 @@
     static BOOL checkNetwork = YES;
     if (checkNetwork) 
     {
-        
         checkNetwork = NO;
         
         Boolean success;    
