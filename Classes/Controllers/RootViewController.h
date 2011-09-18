@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "PortalFeeds.h"
 #import "FlickrController.h"
-#import "RootNavViewController.h"
+#import "NavViewController.h"
 
 
 @interface RootViewController : UIViewController <FlickrControllerDelegate>
 {
-    RootNavViewController *rootNavViewController;
+    NavViewController *NavViewController;
     PortalFeeds *feeds;
     FlickrController* flickrData;
     
@@ -22,7 +22,7 @@
     UIImageView *coverImageView;
 }
 
-@property (nonatomic, retain) RootNavViewController *rootNavViewController;
+@property (nonatomic, retain) NavViewController *NavViewController;
 @property (nonatomic, retain) PortalFeeds *feeds;
 @property (nonatomic, retain) FlickrController *flickrData;
 @property (nonatomic, retain) UIImageView *coverImageView;

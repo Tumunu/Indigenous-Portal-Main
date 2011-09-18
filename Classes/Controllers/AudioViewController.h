@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AboutViewController.h"
-#import "PortalViews.h"
+#import "PortalViewsMediator.h"
 #import "PortalFeeds.h"
 #import "PortalArticle.h"
 
@@ -25,7 +25,7 @@
     PlayerViewController *playerViewController;
     NewsViewController *newsViewController;
     VideoViewController *videoViewController;
-    PortalViews *portalViews;
+    PortalViewsMediator *PortalViewsMediator;
     PortalFeeds *portalFeeds;
     PortalArticle *portalArticle;
 }

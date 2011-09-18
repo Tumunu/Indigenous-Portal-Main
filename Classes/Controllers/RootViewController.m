@@ -10,7 +10,7 @@
 
 @implementation RootViewController
 
-@synthesize rootNavViewController;
+@synthesize NavViewController;
 @synthesize feeds;
 @synthesize flickrData;
 @synthesize backgroundImagesArray;
@@ -46,11 +46,11 @@
     feeds = [[PortalFeeds alloc] init];
     [self initSplashCover];
     
-    RootNavViewController *tempRootNavViewController = [[RootNavViewController alloc] initWithFeed:feeds];
-    self.rootNavViewController = tempRootNavViewController;
-    [tempRootNavViewController release];
+    NavViewController *tempNavViewController = [[NavViewController alloc] initWithFeed:feeds];
+    self.NavViewController = tempNavViewController;
+    [tempNavViewController release];
 	
-	[self presentModalViewController:rootNavViewController animated:YES];
+	[self presentModalViewController:NavViewController animated:YES];
 }
 
 
@@ -119,7 +119,7 @@
     {
         LOG(@"%d active touches",[[event touchesForView:self.view] count]) ;
         
-        [self presentModalViewController:rootNavViewController animated:YES];        
+        [self presentModalViewController:NavViewController animated:YES];        
     }
     [super touchesBegan:touches withEvent:event] ;
 }

@@ -8,7 +8,7 @@
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "PortalFeeds.h"
-#import "PortalViews.h"
+#import "PortalViewsMediator.h"
 
 
 @implementation PortalFeeds

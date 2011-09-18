@@ -30,7 +30,7 @@
     [newsViewController release];
     [videoViewController release];
     [playerViewController release];
-    [portalViews release];
+    [PortalViewsMediator release];
     [portalFeeds release];
     [portalArticle release];
     [super dealloc];
@@ -42,7 +42,7 @@
 
     [super viewDidLoad];
     [self setupView];
-    [[PortalViews alloc] init];
+    [[PortalViewsMediator alloc] init];
 }
 
 - (void)didReceiveMemoryWarning 
@@ -117,7 +117,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [portalViews switchView:kNews];
+    [PortalViewsMediator switchView:kNews];
 }
 - (IBAction)showVideoList 
 {
@@ -125,7 +125,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [portalViews switchView:kVideo];
+    [PortalViewsMediator switchView:kVideo];
 }
 
 - (IBAction)refreshList
