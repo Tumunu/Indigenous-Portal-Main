@@ -1,5 +1,5 @@
 //
-//  RootNavViewController.h
+//  NavViewController.h
 //  iPortal
 //
 //  Created by Cleave Pokotea on 14/05/09.
@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PortalViews.h"
+#import "PortalViewsMediator.h"
 #import "PortalFeeds.h"
 
 
@@ -19,13 +19,13 @@
 @end
 
 
-@interface RootNavViewController : UIViewController 
+@interface NavViewController : UIViewController 
 {
     UIImageView *backgroundImage;
 
     CustomAlertViewController *customAlertViewController;
     PortalFeeds *portalFeeds;
-    PortalViews *portalViews;
+    PortalViewsMediator *PortalViewsMediator;
     
     id<RootNavDelegate> delegate;
 }
@@ -33,7 +33,7 @@
 @property (nonatomic, retain) UIImageView *backgroundImage;
 @property (nonatomic, retain) CustomAlertViewController *customAlertViewController;
 @property (nonatomic, retain) PortalFeeds *portalFeeds;
-@property (nonatomic, retain) PortalViews *portalViews;
+@property (nonatomic, retain) PortalViewsMediator *PortalViewsMediator;
 @property (nonatomic, assign) id <RootNavDelegate> delegate;
 
 - (id)initWithFeed:(PortalFeeds *)portalFeeds;

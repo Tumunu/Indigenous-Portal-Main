@@ -1,5 +1,5 @@
 //
-//  PortalViews.h
+//  PortalViewsMediator.h
 //  iPortal
 //
 //  Created by Cleave Pokotea on 9/09/11.
@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RootViewController.h"
 #import "NewsViewController.h"
 #import "VideoViewController.h"
 #import "AudioViewController.h"
 #import "CustomAlertViewController.h"
+
 
 enum ViewType
 {
@@ -20,18 +22,29 @@ enum ViewType
 	kNumViewTypes
 };
 
-@interface PortalViews : NSObject
+
+@interface PortalViewsMediator : NSObject
 {
+    @private
+    RootViewController *rootViewController;
     NewsViewController *newsViewController;    
     VideoViewController *videoViewController;    
     AudioViewController *audioViewController;
+    
+    UIViewController *currentViewController;
 }
 
-@property (nonatomic, retain)NewsViewController *newsViewController;
-@property (nonatomic, retain)VideoViewController *videoViewController;
-@property (nonatomic, retain)AudioViewController *audioViewController;
+
+@property (nonatomic, readonly)RootViewController *rootViewController;
+@property (nonatomic, readonly)NewsViewController *newsViewController;
+@property (nonatomic, readonly)VideoViewController *videoViewController;
+@property (nonatomic, readonly)AudioViewController *audioViewController;
+@property (nonatomic, readonly)UIViewController *currentViewController;
 
 
 - (void)switchView:(UIView *)currentView whatView:(int)nextView withFeed:(NSArray *)feed;
+
+// Necessary evil
++ (PortalViewsMediator *)sharedInstance;
 
 @end

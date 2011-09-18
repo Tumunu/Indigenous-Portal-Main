@@ -1,5 +1,5 @@
 //
-//  PortalViews.m
+//  PortalViewsMediator.m
 //  iPortal
 //
 //  Created by Cleave Pokotea on 9/09/11.
@@ -7,29 +7,35 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "PortalViews.h"
-
-@implementation PortalViews
+#import "PortalViewsMediator.h"
 
 
-- (id)init
+@interface PortalViewsMediator ()
+- (void)initialize;
+@end
+
+
+@implementation PortalViewsMediator
+
+
+@synthesize rootViewController;
+@synthesize newsViewController;
+@synthesize videoViewController;
+@synthesize audioViewController;
+@synthesize currentViewController;
+
+static PortalViewsMediator *sharedMediator = nil;
+
+- (void)initialize
 {
-    if ((self = [super init]) != NULL)
-	{
-        // Yes I know this shouldn't be here
-        newsViewController = [[NewsViewController alloc] init];
-        videoViewController = [[VideoViewController alloc] init];
-        audioViewController = [[AudioViewController alloc] init];
-	}
-    return(self);
+    rootViewController = [[rootViewController alloc] init];
+    newsViewController = [[NewsViewController alloc] init];
+    videoViewController = [[VideoViewController alloc] init];
+    audioViewController = [[AudioViewController alloc] init];
+    currentViewController = rootViewController;
 }
 
-- (void)dealloc 
-{
-    [newsViewController release];    
-    [videoViewController release];    
-    [audioViewController release];
-}
+
 
 /*
  Switch View
@@ -43,13 +49,13 @@
 
     switch(nextView) 
     {
-        case 1:
+        case kNews:
             [currentView insertSubview:[newsViewController view] atIndex:1];
             break;
-        case 2:
+        case kVideo:
             [currentView insertSubview:[videoViewController view] atIndex:1];
             break;
-        case 3:
+        case kAudio:
             [currentView insertSubview:[audioViewController view] atIndex:1];
             break;
     }
@@ -83,4 +89,45 @@
     self.customAlertViewController.view.alpha = 1.0;
     [UIView commitAnimations];
 }
+
+
++ (PortalViewsMediator *)sharedInstance
+{
+    if (sharedMediator == nil) 
+    {
+        sharedInstance = [[super allocWithZone:NULL] init];
+        [sharedMediator initialize];
+    }
+    
+    return sharedMediator;
+}
+
++ (id) allocWithZone:(NSZone *)zone
+{
+    return [[self sharedInstance] retain];
+}
+
+- (id) copyWithZone:(NSZone*)zone
+{
+    return self;
+}
+
+- (id) retain
+{
+    return self;
+}
+
+- (NSUInteger) retainCount
+{
+    return NSUIntegerMax;
+}
+
+- (void) release
+{}
+
+- (id) autorelease
+{
+    return self;
+}
+
 @end

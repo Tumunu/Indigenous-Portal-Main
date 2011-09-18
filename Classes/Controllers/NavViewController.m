@@ -1,5 +1,5 @@
 //
-//  RootNavViewController.m
+//  NavViewController.m
 //  iPortal
 //
 //  Created by Cleave Pokotea on 14/05/09.
@@ -8,17 +8,17 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "iPortalAppDelegate.h"
-#import "RootNavViewController.h"
+#import "NavViewController.h"
 #import "PortalFeeds.h"
-#import "PortalViews.h"
+#import "PortalViewsMediator.h"
 
 
-@implementation RootNavViewController
+@implementation NavViewController
 
 @synthesize backgroundImage;
 @synthesize customAlertViewController;
 @synthesize portalFeeds;
-@synthesize portalViews;
+@synthesize PortalViewsMediator;
 @synthesize delegate;
 
 
@@ -32,7 +32,7 @@
     }
     
     [portalFeeds release];
-    [portalViews release];
+    [PortalViewsMediator release];
     
     [super dealloc];
 }
@@ -57,7 +57,7 @@
     [self setBackgroundImage];
     [super viewDidLoad];
     
-    portalViews = [[PortalViews alloc] init];
+    PortalViewsMediator = [[PortalViewsMediator alloc] init];
     
     // Should also be placed elsewhere but pfft...
     if(![portalFeeds checkIsDataSourceAvailable]) 
@@ -81,7 +81,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [self.delegate rootNavHide];
-    [portalViews switchView:[[self view] superview] whatView:kNews withFeed:[portalFeeds.localNewsFeed copy]];
+    [PortalViewsMediator switchView:[[self view] superview] whatView:kNews withFeed:[portalFeeds.localNewsFeed copy]];
 }
 
 - (IBAction)showVideo 
@@ -90,7 +90,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [self.delegate rootNavHide];
-    [portalViews switchView:[[self view] superview] whatView:kVideo withFeed:[portalFeeds.localVideoFeed copy]];
+    [PortalViewsMediator switchView:[[self view] superview] whatView:kVideo withFeed:[portalFeeds.localVideoFeed copy]];
 }
 
 - (IBAction)showAudio 
@@ -99,7 +99,7 @@
     
     [iPortalAppDelegate playEffect:kEffectButton];
     [self.delegate rootNavHide];
-    [portalViews switchView:[[self view] superview] whatView:kAudio withFeed:[portalFeeds.localAudioFeed copy]];
+    [PortalViewsMediator switchView:[[self view] superview] whatView:kAudio withFeed:[portalFeeds.localAudioFeed copy]];
 }
 
 #pragma mark -
